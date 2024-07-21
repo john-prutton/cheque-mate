@@ -1,0 +1,38 @@
+@keyframes small-ping {
+  0% {
+    @apply inset-0 opacity-0;
+  }
+  15% {
+    @apply -inset-2 opacity-100;
+  }
+  50%,
+  100% {
+    @apply -inset-8 opacity-0;
+  }
+}
+
+.animate-small-ping {
+  @apply relative mt-8 h-fit w-full text-2xl font-black;
+
+  &::after {
+    @apply bg-foreground/30 absolute -inset-10 -z-10 rounded-md content-[''];
+
+    animation: small-ping 2s infinite;
+  }
+}
+
+.radial-bg {
+  @apply grid h-svh place-content-center overflow-hidden content-[''];
+
+  background-image: radial-gradient(
+    ellipse at center in hsl shorter hue,
+    color-mix(in oklab, hsl(var(--primary)) 85%, transparent) 0%,
+    color-mix(in oklab, hsl(var(--primary)) 80%, transparent) 5vmax,
+    color-mix(in oklab, hsl(var(--primary)) 50%, transparent) 20vmax,
+    color-mix(in oklab, hsl(var(--primary)) 10%, transparent) 80vmax
+  );
+
+  background-size: 150vmax 100vmax;
+  background-repeat: no-repeat;
+  background-position: center;
+}
