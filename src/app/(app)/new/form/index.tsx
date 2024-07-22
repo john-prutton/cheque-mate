@@ -3,7 +3,12 @@
 import Image from "next/image"
 import { useRef, useState } from "react"
 
-import { LucideImageUp, LucideMinus, LucidePlus } from "lucide-react"
+import {
+  LucideImageUp,
+  LucideLoader2,
+  LucideMinus,
+  LucidePlus
+} from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -13,19 +18,56 @@ import { createNewBill } from "./action"
 import "./style.css"
 
 export function NewBillForm() {
-  const [pictures, setPictures] = useState<{ base64: string; file: File }[]>([])
+  const [pictures, setPictures] = useState<string[]>([])
   const [numberOfPeople, setNumberOfPeople] = useState<number | null>(null)
   const imageInputRef = useRef<HTMLInputElement>(null)
 
-  const handleSubmit = () => {
+  const [pending, setPending] = useState(false)
+
+  const handleImageChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const files = event.target.files
+    if (!files) return
+
+    const base64Images = await Promise.all(
+      Array.from(files).map(
+        (file) =>
+          new Promise<string>((resolve) => {
+            const reader = new FileReader()
+            reader.onload = () => resolve(reader.result as string)
+            reader.readAsDataURL(file)
+          })
+      )
+    )
+
+    setPictures((pictures) => [...pictures, ...base64Images])
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+
     if (!numberOfPeople || numberOfPeople < 2 || pictures.length === 0) {
       return
     }
 
-    createNewBill({
-      numberOfPeople,
-      images: pictures.map((picture) => picture.file)
-    })
+    setPending(true)
+
+    try {
+      alert(
+        JSON.stringify(
+          await createNewBill({
+            numberOfPeople,
+            images: pictures
+          })
+        )
+      )
+    } catch (error) {
+      alert("An error occurred while processing the bill.")
+      console.error(error)
+    }
+
+    setPending(false)
   }
 
   return (
@@ -52,7 +94,7 @@ export function NewBillForm() {
               .toReversed()
               .map((picture, index, arr) => (
                 <Image
-                  src={picture.base64}
+                  src={picture}
                   key={index}
                   alt={`Image ${index} of the bill`}
                   style={{ zIndex: arr.length - index }}
@@ -69,16 +111,7 @@ export function NewBillForm() {
           className="hidden"
           type="file"
           accept="image/*"
-          onChange={(event) => {
-            const files = event.target.files
-            if (files) {
-              const urls = Array.from(files).map((file) => ({
-                base64: URL.createObjectURL(file),
-                file
-              }))
-              setPictures((pictures) => [...pictures, ...urls])
-            }
-          }}
+          onChange={handleImageChange}
         />
 
         <div className="flex flex-row">
@@ -110,10 +143,15 @@ export function NewBillForm() {
       <Button
         className="mt-16 w-full disabled:bg-primary/20 disabled:text-foreground"
         disabled={
-          pictures.length === 0 || !numberOfPeople || numberOfPeople < 2
+          pictures.length === 0 ||
+          !numberOfPeople ||
+          numberOfPeople < 2 ||
+          pending
         }
+        type="submit"
       >
         Next
+        {pending && <LucideLoader2 className="ml-2 animate-spin" />}
       </Button>
     </form>
   )
