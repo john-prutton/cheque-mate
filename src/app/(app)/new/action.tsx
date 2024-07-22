@@ -1,18 +1,16 @@
 "use server"
 
+import { redirect } from "next/navigation"
+
 import { openai } from "@ai-sdk/openai"
 import { CoreMessage, generateObject, ImagePart } from "ai"
 import { z } from "zod"
 
+import { db } from "@/lib/db"
+import { billsTable, itemsTable } from "@/lib/db/schema"
 import { itemSchema } from "@/lib/schemas"
 
-export async function createNewBill({
-  numberOfPeople,
-  images
-}: {
-  numberOfPeople: number
-  images: string[]
-}) {
+export async function createNewBill({ images }: { images: string[] }) {
   const userContent: ImagePart[] = images.map((image) => ({
     type: "image",
     image
@@ -35,5 +33,14 @@ export async function createNewBill({
     messages
   })
 
-  return items.object.items
+  const [{ id: billId }] = await db.insert(billsTable).values({}).returning()
+  console.log(billId)
+  const _ = await db.insert(itemsTable).values(
+    items.object.items.map((item) => ({
+      billId,
+      ...item
+    }))
+  )
+
+  redirect(`/bill/${billId}`)
 }
