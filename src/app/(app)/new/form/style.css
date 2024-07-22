@@ -1,0 +1,13 @@
+.labeled-input {
+  @apply relative mt-12;
+}
+
+label {
+  @apply text-muted-foreground absolute left-3 top-1/2 -translate-y-1/2 transition-transform;
+}
+input:not(:placeholder-shown),
+input:focus {
+  & + label {
+    @apply top-0 -translate-y-8;
+  }
+}
