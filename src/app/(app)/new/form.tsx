@@ -4,9 +4,9 @@ import { useState } from "react"
 
 import { LucideLoader2 } from "lucide-react"
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/app/_components/ui/button"
 
-import { createNewBill } from "./action"
+import { handleCreateNewBill } from "./action"
 import { ImageInput } from "./image-input"
 
 export function NewBillForm() {
@@ -23,13 +23,9 @@ export function NewBillForm() {
     setPending(true)
 
     try {
-      alert(
-        JSON.stringify(
-          await createNewBill({
-            images
-          })
-        )
-      )
+      await handleCreateNewBill({
+        images
+      })
     } catch (error) {
       alert("An error occurred while processing the bill.")
       console.error(error)

@@ -1,23 +1,13 @@
-import { eq } from "drizzle-orm"
-
-import { db } from "@/lib/db"
-import { itemsTable } from "@/lib/db/schema"
+import { billRepository } from "@/infrastructure/db"
 
 export default async function BillPage({
   params: { id }
 }: {
   params: { id: string }
 }) {
-  const billItems = await db
-    .select()
-    .from(itemsTable)
-    .where(eq(itemsTable.billId, +id))
-    .catch((error) => {
-      console.error(error)
-      return []
-    })
+  const bill = await billRepository.get(+id)
 
-  if (billItems.length === 0) {
+  if (bill.items.length === 0) {
     return <div>Bill not found</div>
   }
 
@@ -26,7 +16,7 @@ export default async function BillPage({
       <h1>Bill: {id}</h1>
 
       <div>
-        {billItems.map((item) => (
+        {bill.items.map((item) => (
           <div key={item.id}>
             <div>{item.name}</div>
             <div>{item.price}</div>

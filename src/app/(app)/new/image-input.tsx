@@ -5,7 +5,7 @@ import { Dispatch, SetStateAction, useRef } from "react"
 
 import { LucideImageUp, LucideMinus, LucidePlus } from "lucide-react"
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/app/_components/ui/button"
 
 type Props = {
   images: string[]
