@@ -8,6 +8,10 @@
   ],
 
   "importOrder": [
+    "^domain/.*$",
+    "^use-cases/.*$",
+    "^infra/.*$",
+    "",
     "^next($|/.*)$",
     "^react($|/.*)$",
     "^react-dom($|/.*)$",
@@ -15,8 +19,6 @@
     "<BUILTIN_MODULES>",
     "",
     "<THIRD_PARTY_MODULES>",
-    "",
-    "^@repo($|/.*)$",
     "",
     "^@/.*$",
     "",

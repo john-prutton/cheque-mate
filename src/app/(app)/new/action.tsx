@@ -1,10 +1,10 @@
 "use server"
 
-import { redirect } from "next/navigation"
-
+import { createNewBill } from "use-cases/create-new-bill"
 import { aiRepository } from "infra/ai"
 import { billRepository } from "infra/db"
-import { createNewBill } from "use-cases/create-new-bill"
+
+import { redirect } from "next/navigation"
 
 export async function handleCreateNewBill({ images }: { images: string[] }) {
   const { id } = await createNewBill(

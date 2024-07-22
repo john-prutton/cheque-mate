@@ -15,7 +15,7 @@
   @apply relative mt-8 h-fit w-full text-2xl font-black;
 
   &::after {
-    @apply bg-foreground/30 absolute -inset-10 -z-10 rounded-md content-[''];
+    @apply absolute -inset-10 -z-10 rounded-md bg-foreground/30 content-[''];
 
     animation: small-ping 2s infinite;
   }

@@ -1,6 +1,7 @@
+import { IAIRepository } from "domain/repositories/ai"
+
 import { openai } from "@ai-sdk/openai"
 import { CoreMessage, generateObject, ImagePart } from "ai"
-import { IAIRepository } from "domain/repositories/ai"
 import { z } from "zod"
 
 export const aiRepository: IAIRepository = {
