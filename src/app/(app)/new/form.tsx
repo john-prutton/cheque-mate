@@ -4,7 +4,7 @@ import { useState } from "react"
 
 import { LucideLoader2 } from "lucide-react"
 
-import { Button } from "@/app/_components/ui/button"
+import { Button } from "@/components/ui/button"
 
 import { handleCreateNewBill } from "./action"
 import { ImageInput } from "./image-input"

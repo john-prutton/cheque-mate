@@ -1,8 +1,7 @@
 import { openai } from "@ai-sdk/openai"
 import { CoreMessage, generateObject, ImagePart } from "ai"
+import { IAIRepository } from "domain/repositories/ai"
 import { z } from "zod"
-
-import { IAIRepository } from "@/domain/repositories/ai"
 
 export const aiRepository: IAIRepository = {
   analyzeReceipts: async (images: string[]) => {

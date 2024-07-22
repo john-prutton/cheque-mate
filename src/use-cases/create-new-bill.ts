@@ -1,6 +1,6 @@
-import { Bill } from "@/domain/entities/bill"
-import { IAIRepository } from "@/domain/repositories/ai"
-import { IBillRepository } from "@/domain/repositories/database"
+import { Bill } from "domain/entities/bill"
+import { IAIRepository } from "domain/repositories/ai"
+import { IBillRepository } from "domain/repositories/database"
 
 type Inputs = { images: string[] }
 type Dependencies = { Bill: IBillRepository; Ai: IAIRepository }

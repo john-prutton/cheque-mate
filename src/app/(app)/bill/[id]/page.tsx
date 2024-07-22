@@ -1,4 +1,4 @@
-import { billRepository } from "@/infrastructure/db"
+import { billRepository } from "infra/db"
 
 export default async function BillPage({
   params: { id }

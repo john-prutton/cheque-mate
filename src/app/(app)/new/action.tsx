@@ -2,9 +2,9 @@
 
 import { redirect } from "next/navigation"
 
-import { aiRepository } from "@/infrastructure/ai"
-import { billRepository } from "@/infrastructure/db"
-import { createNewBill } from "@/use-cases/create-new-bill"
+import { aiRepository } from "infra/ai"
+import { billRepository } from "infra/db"
+import { createNewBill } from "use-cases/create-new-bill"
 
 export async function handleCreateNewBill({ images }: { images: string[] }) {
   const { id } = await createNewBill(
