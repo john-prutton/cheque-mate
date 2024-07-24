@@ -25,6 +25,8 @@ export const billRepository: IBillRepository = {
       .from(billsTable)
       .where(eq(billsTable.id, id))
 
+    if (!bill) throw new Error("Bill not found")
+
     const items = await db
       .select()
       .from(itemsTable)
