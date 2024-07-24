@@ -3,6 +3,7 @@
 import { useState } from "react"
 
 import { LucideLoader2 } from "lucide-react"
+import { toast } from "sonner"
 
 import { Button } from "@/components/ui/button"
 
@@ -26,8 +27,14 @@ export function NewBillForm() {
       await handleCreateNewBill({
         images
       })
+
+      toast.success("Bill created successfully", {
+        description: "You can now start splitting the bill."
+      })
     } catch (error) {
-      alert("An error occurred while processing the bill.")
+      toast.error("Something went wrong", {
+        description: "An error occurred while processing the bill."
+      })
       console.error(error)
     }
 
