@@ -2,6 +2,8 @@ import { billRepository } from "infra/db"
 
 import { notFound } from "next/navigation"
 
+import { ItemCounter } from "./item-counter"
+
 async function getBill(id: Bill["id"]) {
   try {
     return await billRepository.get(id)
@@ -21,14 +23,21 @@ export default async function BillPage({
 
   return (
     <main>
-      <h1>Bill: {id}</h1>
-
-      <div>
+      <div className="space-y-4">
         {bill.items.map((item) => (
-          <div key={item.id}>
-            <div>{item.name}</div>
-            <div>{item.price}</div>
-            <div>{item.quantity}</div>
+          <div key={item.id} className="flex flex-col gap-2 sm:flex-row">
+            <div className="w-full rounded bg-background p-2">
+              <div>
+                <h3 className="inline-block text-lg font-bold">{item.name}</h3>
+                <span className="ml-2 text-muted-foreground">
+                  (x{item.quantity})
+                </span>
+              </div>
+
+              <span>R{item.price}</span>
+            </div>
+
+            <ItemCounter available={item.quantity} />
           </div>
         ))}
       </div>
