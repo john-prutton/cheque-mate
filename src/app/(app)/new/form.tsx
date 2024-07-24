@@ -17,10 +17,6 @@ export function NewBillForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    if (images.length === 0) {
-      return
-    }
-
     setPending(true)
 
     try {
