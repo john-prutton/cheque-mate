@@ -1,5 +1,6 @@
 import Link from "next/link"
 
+import { SignInButton } from "@/components/auth/sign-in-button"
 import { Button } from "@/components/ui/button"
 
 import style from "./style.module.css"
@@ -17,6 +18,8 @@ export default function Home() {
         <Button asChild className={style["animate-small-ping"]}>
           <Link href="/new">Get Started</Link>
         </Button>
+
+        <SignInButton />
       </div>
     </main>
   )

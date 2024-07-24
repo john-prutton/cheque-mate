@@ -2,8 +2,8 @@ import type { IBillRepository } from "domain/repositories"
 
 import { eq } from "drizzle-orm"
 
-import { db } from "./db"
-import { billsTable, itemsTable } from "./schema"
+import { db } from "../db"
+import { billsTable, itemsTable } from "../schema/bill"
 
 export const billRepository: IBillRepository = {
   create: async (newBill) => {
