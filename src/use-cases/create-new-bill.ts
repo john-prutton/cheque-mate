@@ -1,4 +1,3 @@
-import { Bill } from "domain/entities/bill"
 import { IAIRepository } from "domain/repositories/ai"
 import { IBillRepository } from "domain/repositories/database"
 

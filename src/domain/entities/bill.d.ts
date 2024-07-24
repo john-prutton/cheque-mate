@@ -1,16 +1,16 @@
-export type Bill = {
+type Bill = {
   id: number
   items: Item[]
 }
 
-export type NewBill = {
+type NewBill = {
   items: NewItem[]
 }
 
-export type Item = {
+type Item = {
   id: number
   price: number
   quantity: number
   name: string
 }
-export type NewItem = Omit<Item, "id">
+type NewItem = Omit<Item, "id">
