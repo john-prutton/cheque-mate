@@ -1,8 +1,8 @@
-import { IAIRepository } from "domain/repositories/ai"
-import { IBillRepository } from "domain/repositories/database"
+import { IBillRepository } from "domain/repositories"
+import { IAIService } from "domain/services/ai"
 
 type Inputs = { images: string[] }
-type Dependencies = { Bill: IBillRepository; Ai: IAIRepository }
+type Dependencies = { Bill: IBillRepository; Ai: IAIService }
 type Returns = Promise<{ id: Bill["id"] }>
 
 export const createNewBill: UseCase<Inputs, Dependencies, Returns> = async (

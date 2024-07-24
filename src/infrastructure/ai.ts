@@ -1,10 +1,10 @@
-import { IAIRepository } from "domain/repositories/ai"
+import { IAIService } from "domain/services/ai"
 
 import { openai } from "@ai-sdk/openai"
 import { CoreMessage, generateObject, ImagePart } from "ai"
 import { z } from "zod"
 
-export const aiRepository: IAIRepository = {
+export const aiRepository: IAIService = {
   analyzeReceipts: async (images: string[]) => {
     const userContent: ImagePart[] = images.map((image) => ({
       type: "image",

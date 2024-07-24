@@ -1,4 +1,4 @@
-import type { IBillRepository } from "domain/repositories/database"
+import type { IBillRepository } from "domain/repositories"
 
 import { eq } from "drizzle-orm"
 
