@@ -1,11 +1,11 @@
 import Link from "next/link"
 
-import { SignInButton } from "@/components/auth/sign-in-button"
+import { AuthButton } from "@/components/auth-button"
 import { Button } from "@/components/ui/button"
 
 import style from "./style.module.css"
 
-export default function Home() {
+export default async function Home() {
   return (
     <main className={style["radial-bg"]}>
       <div className="w-fit max-w-md">
@@ -19,7 +19,7 @@ export default function Home() {
           <Link href="/new">Get Started</Link>
         </Button>
 
-        <SignInButton />
+        <AuthButton containerClassName="mt-8 mx-auto w-fit" />
       </div>
     </main>
   )

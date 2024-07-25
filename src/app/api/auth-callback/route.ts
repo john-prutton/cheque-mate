@@ -1,7 +1,8 @@
 import { handleSignInCallback } from "use-cases/auth"
 
 import { cookies } from "next/headers"
-import { NextRequest, NextResponse } from "next/server"
+import { redirect } from "next/navigation"
+import { NextRequest } from "next/server"
 
 import {
   AUTH_COOKIE_NAME,
@@ -24,9 +25,10 @@ export async function GET(request: NextRequest) {
     storedState
   })
 
-  cookies().delete(OAUTH_CODE_VERIFIER_COOKIE_NAME)
-  cookies().delete(OAUTH_STATE_COOKIE_NAME)
-  cookies().set({
+  const cookieStore = cookies()
+  cookieStore.delete(OAUTH_CODE_VERIFIER_COOKIE_NAME)
+  cookieStore.delete(OAUTH_STATE_COOKIE_NAME)
+  cookieStore.set({
     name: AUTH_COOKIE_NAME,
     value: sessionId,
     httpOnly: true,
@@ -36,5 +38,5 @@ export async function GET(request: NextRequest) {
     maxAge: 1_000_000
   })
 
-  return NextResponse.redirect(process.env.BASE_URL!)
+  redirect("/auth/success")
 }

@@ -13,4 +13,6 @@ export type IAuthService = {
   }) => Promise<{ sessionId: string }>
 
   handleSignOut: (sessionId: Session["id"]) => Promise<void>
+
+  validateSession: (sessionId: Session["id"]) => Promise<User>
 }

@@ -11,9 +11,10 @@ import {
   OAUTH_STATE_COOKIE_NAME
 } from "@/utils/auth"
 
-const setCookie = (cookie: Cookie) =>
+const setCookie = (name: string, value: string) =>
   cookies().set({
-    ...cookie,
+    name,
+    value,
     path: "/",
     secure: process.env.NODE_ENV === "production",
     httpOnly: true,
@@ -24,8 +25,8 @@ const setCookie = (cookie: Cookie) =>
 export const handleSignIn = async () => {
   const { url, state, codeVerifier } = await signIn()
 
-  setCookie({ name: OAUTH_STATE_COOKIE_NAME, value: state })
-  setCookie({ name: OAUTH_CODE_VERIFIER_COOKIE_NAME, value: codeVerifier })
+  setCookie(OAUTH_STATE_COOKIE_NAME, state)
+  setCookie(OAUTH_CODE_VERIFIER_COOKIE_NAME, codeVerifier)
 
   redirect(url)
 }

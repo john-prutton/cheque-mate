@@ -1,8 +1,6 @@
 import { IAuthService } from "domain/services/auth"
 import { authRepository } from "infra/db" // eslint-disable-line
 
-import { redirect } from "next/navigation"
-
 import { generateCodeVerifier, generateState } from "arctic"
 
 import { googleAuth, lucia } from "./lucia"
@@ -88,5 +86,13 @@ export const authService: IAuthService = {
 
   handleSignOut: async (sessionId) => {
     await lucia.invalidateSession(sessionId)
+  },
+
+  validateSession: async (sessionId) => {
+    const [session, user] = await authRepository.getSessionAndUser(sessionId)
+
+    if (!session || !user) throw new Error("Invalid session")
+
+    return user
   }
 }
