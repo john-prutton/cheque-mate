@@ -1,2 +1,2 @@
-export * from "./bill"
+export * from "./ai"
 export * from "./auth"
