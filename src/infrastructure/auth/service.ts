@@ -33,11 +33,6 @@ export const authService: IAuthService = {
     state,
     storedCodeVerifier,
     storedState
-  }: {
-    code: string | null
-    state: string | null
-    storedCodeVerifier: string | undefined
-    storedState: string | undefined
   }) => {
     if (
       !code ||

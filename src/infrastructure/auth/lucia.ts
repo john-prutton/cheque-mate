@@ -44,7 +44,7 @@ export const lucia = new Lucia(
 export const googleAuth = new Google(
   process.env.GOOGLE_CLIENT_ID!,
   process.env.GOOGLE_CLIENT_SECRET!,
-  process.env.BASE_URL + "/api/auth-callback"
+  process.env.BASE_URL + "/auth/callback"
 )
 
 declare module "lucia" {

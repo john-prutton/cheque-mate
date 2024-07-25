@@ -1,8 +1,7 @@
 import { handleSignInCallback } from "use-cases/auth"
 
 import { cookies } from "next/headers"
-import { redirect } from "next/navigation"
-import { NextRequest } from "next/server"
+import { NextRequest, NextResponse } from "next/server"
 
 import {
   AUTH_COOKIE_NAME,
@@ -11,10 +10,13 @@ import {
 } from "@/utils/auth"
 
 export async function GET(request: NextRequest) {
-  const state = request.nextUrl.searchParams.get("state")
   const code = request.nextUrl.searchParams.get("code")
-  const storedState = request.cookies.get(OAUTH_STATE_COOKIE_NAME)?.value
-  const storedCodeVerifier = request.cookies.get(
+  const state = request.nextUrl.searchParams.get("state")
+
+  const cookieStore = cookies()
+
+  const storedState = cookieStore.get(OAUTH_STATE_COOKIE_NAME)?.value
+  const storedCodeVerifier = cookieStore.get(
     OAUTH_CODE_VERIFIER_COOKIE_NAME
   )?.value
 
@@ -25,7 +27,6 @@ export async function GET(request: NextRequest) {
     storedState
   })
 
-  const cookieStore = cookies()
   cookieStore.delete(OAUTH_CODE_VERIFIER_COOKIE_NAME)
   cookieStore.delete(OAUTH_STATE_COOKIE_NAME)
   cookieStore.set({
@@ -38,5 +39,5 @@ export async function GET(request: NextRequest) {
     maxAge: 1_000_000
   })
 
-  redirect("/auth/success")
+  return NextResponse.json({}, { status: 200 })
 }
