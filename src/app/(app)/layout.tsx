@@ -1,9 +1,7 @@
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="grid min-h-svh place-content-center bg-background">
-      <div className="max-h-[min(90svh,calc((16/9)*95svw))] w-[95svw] max-w-screen-sm rounded-xl bg-card p-8 drop-shadow-2xl">
-        {children}
-      </div>
+    <div className="flex min-h-svh flex-row items-center justify-center p-2">
+      <div className="w-full sm:max-w-lg">{children}</div>
     </div>
   )
 }
