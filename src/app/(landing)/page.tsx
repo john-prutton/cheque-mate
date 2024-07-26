@@ -16,7 +16,7 @@ export default async function Home() {
         </h1>
 
         <Button asChild className={style["animate-small-ping"]}>
-          <Link href="/new">Get Started</Link>
+          <Link href="/bill/new">Get Started</Link>
         </Button>
 
         <AuthButton containerClassName="mt-8 mx-auto w-fit" />

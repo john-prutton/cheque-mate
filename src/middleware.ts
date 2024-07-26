@@ -24,5 +24,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/bill/:path*", "/new/:path*"]
+  matcher: ["/bill/:path*"]
 }

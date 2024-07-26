@@ -11,7 +11,7 @@ export default function BillNotFound() {
       <span>This bill does not exist</span>
 
       <Button asChild variant="link" className="h-fit w-fit p-0">
-        <Link href="/new">Create a new bill</Link>
+        <Link href="/bill/new">Create a new bill</Link>
       </Button>
     </main>
   )
