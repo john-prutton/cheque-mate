@@ -28,7 +28,9 @@ export default function AuthCallbackPage({
       setStatus("Error")
     } else {
       setStatus("Success")
-      setTimeout(() => push("/"), 2000)
+      const redirectURL = await res.json().then((data) => data.redirectURL)
+
+      setTimeout(() => push(redirectURL ?? "/"), 2000)
     }
   }
 

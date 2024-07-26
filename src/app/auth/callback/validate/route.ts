@@ -5,9 +5,10 @@ import { NextRequest, NextResponse } from "next/server"
 
 import {
   AUTH_COOKIE_NAME,
+  AUTH_REDIRECT_COOKIE_NAME,
   OAUTH_CODE_VERIFIER_COOKIE_NAME,
   OAUTH_STATE_COOKIE_NAME
-} from "@/utils/auth"
+} from "@/auth/constants"
 
 export async function GET(request: NextRequest) {
   const code = request.nextUrl.searchParams.get("code")
@@ -39,5 +40,8 @@ export async function GET(request: NextRequest) {
     maxAge: 1_000_000
   })
 
-  return NextResponse.json({}, { status: 200 })
+  const redirectURL = cookieStore.get(AUTH_REDIRECT_COOKIE_NAME)?.value
+  if (redirectURL) cookieStore.delete(AUTH_REDIRECT_COOKIE_NAME)
+
+  return NextResponse.json({ redirectURL }, { status: 200 })
 }
