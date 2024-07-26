@@ -9,7 +9,7 @@ import {
   AUTH_COOKIE_NAME,
   OAUTH_CODE_VERIFIER_COOKIE_NAME,
   OAUTH_STATE_COOKIE_NAME
-} from "@/utils/auth/constants"
+} from "@/auth/constants"
 
 const setCookie = (name: string, value: string) =>
   cookies().set({

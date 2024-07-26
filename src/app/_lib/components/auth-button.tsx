@@ -1,7 +1,7 @@
-import { getUser } from "@/utils/auth/get-user"
+import { handleSignIn, handleSignOut } from "@/auth/actions"
+import { getUser } from "@/auth/get-user"
 
-import { Button } from "../ui/button"
-import { handleSignIn, handleSignOut } from "./actions"
+import { Button } from "./ui/button"
 
 const checkAuthStatus = async () => {
   try {

@@ -1,7 +1,7 @@
-import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
+import { NextResponse } from "next/server"
 
-import { AUTH_COOKIE_NAME } from "@/utils/auth/constants"
+import { AUTH_COOKIE_NAME } from "@/auth/constants"
 
 export async function middleware(request: NextRequest) {
   const isAuthenticated = await new Promise<boolean>(async (resolve) => {
@@ -15,9 +15,12 @@ export async function middleware(request: NextRequest) {
     resolve(res.ok)
   })
 
-  console.log("isAuthenticated", isAuthenticated)
   if (!isAuthenticated)
-    return NextResponse.redirect(process.env.BASE_URL + "/auth/login")
+    return NextResponse.redirect(
+      process.env.BASE_URL +
+        "/auth/login" +
+        `?redirectURL=${encodeURIComponent(request.url)}`
+    )
 }
 
 export const config = {
