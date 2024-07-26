@@ -7,7 +7,7 @@ import {
   AUTH_COOKIE_NAME,
   OAUTH_CODE_VERIFIER_COOKIE_NAME,
   OAUTH_STATE_COOKIE_NAME
-} from "@/utils/auth"
+} from "@/utils/auth/constants"
 
 export async function GET(request: NextRequest) {
   const code = request.nextUrl.searchParams.get("code")

@@ -1,4 +1,4 @@
-import { getUser } from "@/utils/auth"
+import { getUser } from "@/utils/auth/get-user"
 
 import { Button } from "../ui/button"
 import { handleSignIn, handleSignOut } from "./actions"
