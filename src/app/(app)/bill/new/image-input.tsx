@@ -43,6 +43,7 @@ export const ImageInput = () => {
 
     setPending(false)
   }
+
   const handleImageChange = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -64,7 +65,11 @@ export const ImageInput = () => {
   }
 
   return (
-    <div>
+    <div className="rounded border bg-muted/20 px-2 py-4">
+      <h2 className="text-lg font-bold leading-4">
+        Extract items from receipt
+      </h2>
+
       {images.length === 0 ? (
         <LucideImageUp className="mx-auto aspect-square size-64 stroke-1 opacity-50" />
       ) : (

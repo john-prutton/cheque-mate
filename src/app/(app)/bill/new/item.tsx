@@ -9,13 +9,7 @@ import { Button } from "@/components/ui/button"
 
 import { useReceipt } from "./store"
 
-export const Item = ({
-  index,
-  item
-}: {
-  item: NewItem | Item
-  index: number
-}) => {
+export const Item = ({ index, item }: { index: number; item: NewItem }) => {
   const { updateItem, removeItem } = useReceipt()
 
   const handleChange = useCallback(
@@ -35,14 +29,16 @@ export const Item = ({
           onChange={(e) => handleChange("name", e.target.value)}
         />
 
-        <Button
-          variant="ghost"
-          size="icon"
-          className="w-12 hover:bg-transparent"
-          onClick={() => removeItem(index)}
-        >
-          <LucideTrash2 className="size-4 text-red-500" />
-        </Button>
+        {index !== -1 && (
+          <Button
+            variant="ghost"
+            size="icon"
+            className="w-12 hover:bg-transparent"
+            onClick={() => removeItem(index)}
+          >
+            <LucideTrash2 className="size-4 text-red-500" />
+          </Button>
+        )}
       </div>
 
       <div className="mt-2 flex flex-row gap-2 [&>*]:w-full">

@@ -13,7 +13,7 @@ import { MemoItem } from "./item"
 import { useReceipt } from "./store"
 
 export default function NewBillPage() {
-  const { items } = useReceipt()
+  const { items, setItems } = useReceipt()
   const [pending, setPending] = useState(false)
 
   const handleSubmit = async () => {
@@ -35,7 +35,19 @@ export default function NewBillPage() {
       <h1 className="mb-8 text-3xl font-black tracking-wider">New Bill</h1>
 
       {items.length === 0 ? (
-        <ImageInput />
+        <div className="space-y-4">
+          <ImageInput />
+
+          <Button
+            variant={"link"}
+            className="h-fit w-full p-0"
+            onClick={() =>
+              setItems([{ name: "New item", price: 0, quantity: 0 }])
+            }
+          >
+            Add manually instead
+          </Button>
+        </div>
       ) : (
         <>
           <div className="space-y-4">
@@ -43,6 +55,16 @@ export default function NewBillPage() {
               <MemoItem key={index} item={item} index={index} />
             ))}
           </div>
+
+          <Button
+            variant={"link"}
+            className="mt-4 h-fit w-full p-0"
+            onClick={() =>
+              setItems([...items, { name: "New item", price: 0, quantity: 0 }])
+            }
+          >
+            Add new item
+          </Button>
 
           <Button
             onClick={handleSubmit}
