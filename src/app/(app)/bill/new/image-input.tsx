@@ -1,20 +1,48 @@
 "use client"
 
 import Image from "next/image"
-import { Dispatch, SetStateAction, useRef } from "react"
+import { useRef, useState } from "react"
 
-import { LucideImageUp, LucideMinus, LucidePlus } from "lucide-react"
+import {
+  LucideImageUp,
+  LucideLoader2,
+  LucideMinus,
+  LucidePlus
+} from "lucide-react"
+import { toast } from "sonner"
 
 import { Button } from "@/components/ui/button"
 
-type Props = {
-  images: string[]
-  setImages: Dispatch<SetStateAction<string[]>>
-}
+import { handleAnalyzeReceipt } from "./actions"
+import { useReceipt } from "./store"
 
-export const ImageInput = ({ images, setImages }: Props) => {
+export const ImageInput = () => {
   const ref = useRef<HTMLInputElement>(null)
+  const [images, setImages] = useState<string[]>([])
+  const [pending, setPending] = useState(false)
 
+  const { setItems } = useReceipt()
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+
+    setPending(true)
+
+    try {
+      const { items } = await handleAnalyzeReceipt({
+        images
+      })
+
+      setItems(items)
+    } catch (error) {
+      toast.error("Something went wrong", {
+        description: "An error occurred while processing the bill."
+      })
+      console.error(error)
+    }
+
+    setPending(false)
+  }
   const handleImageChange = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -88,6 +116,15 @@ export const ImageInput = ({ images, setImages }: Props) => {
           Add images
         </Button>
       </div>
+
+      <Button
+        className="mt-16 w-full disabled:bg-primary/20 disabled:text-foreground"
+        disabled={images.length === 0 || pending}
+        onClick={handleSubmit}
+      >
+        Next
+        {pending && <LucideLoader2 className="ml-2 animate-spin" />}
+      </Button>
     </div>
   )
 }

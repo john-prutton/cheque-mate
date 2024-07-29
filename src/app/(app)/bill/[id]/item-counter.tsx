@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { startTransition, useOptimistic } from "react"
 
 import { LucideMinus, LucidePlus } from "lucide-react"
 
@@ -9,31 +9,55 @@ import { cn } from "@/utils/cn"
 
 type Props = {
   available: number
+  user: number
+  updateCount: (newQuant: number) => Promise<void>
 }
 
-export const ItemCounter: React.FC<Props> = ({ available }) => {
-  const [count, setCount] = useState(0)
+export const ItemCounter: React.FC<Props> = ({
+  available,
+  user,
+  updateCount
+}) => {
+  const [userQuantity, setUserQuantity] = useOptimistic(user)
 
-  const handleDecrement = () => setCount((count) => Math.max(0, count - 1))
-  const handleIncrement = () =>
-    setCount((count) => Math.min(available, count + 1))
+  const handleUpdate = async (newUserQuantity: number) =>
+    startTransition(() => {
+      if (newUserQuantity < 0) {
+        return
+      }
+
+      if (newUserQuantity > available) {
+        return
+      }
+
+      setUserQuantity(newUserQuantity)
+      updateCount(newUserQuantity)
+    })
 
   return (
     <div className="flex flex-row items-center justify-center gap-1 text-muted-foreground">
-      <Button onClick={handleDecrement} variant="ghost" size="icon">
+      <Button
+        onClick={() => handleUpdate(userQuantity - 1)}
+        variant="ghost"
+        size="icon"
+      >
         <LucideMinus />
       </Button>
 
       <div
         className={cn(
           "w-[5ch] text-center font-bold",
-          count !== 0 && "text-primary"
+          userQuantity !== 0 && "text-primary"
         )}
       >
-        {count}
+        {userQuantity}
       </div>
 
-      <Button onClick={handleIncrement} variant="ghost" size="icon">
+      <Button
+        onClick={() => handleUpdate(userQuantity + 1)}
+        variant="ghost"
+        size="icon"
+      >
         <LucidePlus />
       </Button>
     </div>

@@ -14,3 +14,4 @@ type Item = {
   name: string
 }
 type NewItem = Omit<Item, "id">
+type UserItem = Item & { userQuantity: Item["quantity"] }
